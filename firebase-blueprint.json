@@ -1,0 +1,103 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A fashion product in the store",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Product name" },
+        "price": { "type": "number", "description": "Product price" },
+        "category": { "type": "string", "enum": ["Sarees", "Lehengas", "Kurtis", "Anarkalis", "Suits"], "description": "Product category" },
+        "rating": { "type": "number", "description": "Average rating" },
+        "reviews": { "type": "integer", "description": "Number of reviews" },
+        "image": { "type": "string", "format": "url", "description": "Main product image URL" },
+        "video": { "type": "string", "format": "url", "description": "Optional product video URL" },
+        "description": { "type": "string", "description": "Product description" },
+        "sizes": { "type": "array", "items": { "type": "string" }, "description": "Available sizes" },
+        "colors": { "type": "array", "items": { "type": "string" }, "description": "Available colors" },
+        "new": { "type": "boolean", "description": "Is it a new arrival?" },
+        "stock": { "type": "integer", "description": "Current stock count" }
+      },
+      "required": ["name", "price", "category", "image", "description", "stock"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A customer order",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the customer" },
+        "items": { "type": "array", "items": { "type": "object" }, "description": "List of cart items" },
+        "total": { "type": "number", "description": "Total order amount" },
+        "status": { "type": "string", "enum": ["pending", "shipped", "delivered", "cancelled"], "description": "Order status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Order creation timestamp" },
+        "address": { "type": "object", "description": "Shipping address" },
+        "paymentStatus": { "type": "string", "enum": ["paid", "unpaid"], "description": "Payment status" },
+        "trackingNumber": { "type": "string", "description": "Shipping tracking number" },
+        "shippingCarrier": { "type": "string", "description": "Shipping carrier name" }
+      },
+      "required": ["userId", "items", "total", "status", "createdAt", "address", "paymentStatus"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "A product review",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the reviewer" },
+        "userName": { "type": "string", "description": "Display name of the reviewer" },
+        "userPhoto": { "type": "string", "format": "url", "description": "Profile photo of the reviewer" },
+        "rating": { "type": "number", "description": "Rating given by the user (1-5)" },
+        "comment": { "type": "string", "description": "Review comment" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Review creation timestamp" }
+      },
+      "required": ["userId", "userName", "rating", "comment", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email", "description": "User email" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "photoURL": { "type": "string", "format": "url", "description": "User profile photo URL" },
+        "phoneNumber": { "type": "string", "description": "User phone number" },
+        "addresses": { 
+          "type": "array", 
+          "items": { 
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "label": { "type": "string", "description": "Address label (e.g., Home, Work)" },
+              "street": { "type": "string" },
+              "city": { "type": "string" },
+              "state": { "type": "string" },
+              "zip": { "type": "string" },
+              "isDefault": { "type": "boolean" }
+            }
+          },
+          "description": "List of saved shipping addresses"
+        },
+        "role": { "type": "string", "enum": ["admin", "user"], "description": "User role" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Profile creation timestamp" }
+      },
+      "required": ["email", "displayName", "role", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Collection of fashion products"
+    },
+    "/products/{productId}/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Subcollection of product reviews"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of customer orders"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Collection of user profiles"
+    }
+  }
+}
