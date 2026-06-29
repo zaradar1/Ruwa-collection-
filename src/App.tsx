@@ -11,6 +11,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
+import SystemDesignPage from './pages/SystemDesignPage';
 import ErrorBoundary from './components/ErrorBoundary';
 import { useAuth } from './components/AuthContext';
 
@@ -79,6 +80,7 @@ const App: React.FC = () => {
       }
       return <UserDashboard onNavigate={navigate} />;
     }
+    if (currentPage === '/system-design') return <SystemDesignPage onNavigate={navigate} />;
     return <HomePage onNavigate={navigate} />;
   };
 
