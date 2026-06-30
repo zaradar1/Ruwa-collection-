@@ -8,7 +8,7 @@ const Footer: React.FC = () => (
         <div>
           <div className="flex items-center gap-2 mb-6">
             <Sparkles className="text-rose-400" size={24} />
-            <h2 className="text-2xl font-serif font-bold tracking-tight">RuWa</h2>
+            <h2 className="text-2xl font-serif font-bold tracking-tight">RuWa Verse</h2>
           </div>
           <p className="text-rose-200 text-sm leading-relaxed">
             Celebrating the rich heritage of South Asian fashion. 
@@ -48,7 +48,7 @@ const Footer: React.FC = () => (
         </div>
       </div>
       <div className="border-t border-rose-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-rose-400 text-[10px] uppercase tracking-widest">© 2024 RuWa Inc. All rights reserved.</p>
+        <p className="text-rose-400 text-[10px] uppercase tracking-widest">© 2024 RuWa Verse Inc. All rights reserved.</p>
         <div className="flex gap-4">
           <Smartphone size={20} className="text-rose-400 hover:text-white cursor-pointer transition-colors" />
           <CreditCard size={20} className="text-rose-400 hover:text-white cursor-pointer transition-colors" />

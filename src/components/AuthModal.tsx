@@ -73,7 +73,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <div className="relative z-10 text-center">
                 <Sparkles className="text-rose-200 mx-auto mb-2" size={32} />
                 <h2 className="text-2xl font-serif font-bold text-white tracking-tight">
-                  {isLogin ? 'Welcome Back' : 'Join RuWa'}
+                  {isLogin ? 'Welcome Back' : 'Join RuWa Verse'}
                 </h2>
               </div>
               <button
