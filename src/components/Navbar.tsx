@@ -25,7 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
           {/* Logo */}
           <div className="flex-shrink-0 cursor-pointer flex items-center gap-2" onClick={() => onNavigate('home')}>
             <Sparkles className="text-rose-600" size={24} />
-            <h1 className="text-2xl font-serif font-bold tracking-tight text-rose-950">RuWa</h1>
+            <h1 className="text-2xl font-serif font-bold tracking-tight text-rose-950">RuWa Verse</h1>
           </div>
 
           {/* Desktop Nav */}

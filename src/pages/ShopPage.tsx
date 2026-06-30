@@ -7,11 +7,19 @@ import { CATEGORIES } from '../constants';
 
 interface ShopPageProps {
   onNavigate: (path: string) => void;
+  initialCategory?: Category | 'All';
+  showNewOnly?: boolean;
+  pageTitle?: string;
 }
 
-const ShopPage: React.FC<ShopPageProps> = ({ onNavigate }) => {
+const ShopPage: React.FC<ShopPageProps> = ({
+  onNavigate,
+  initialCategory = 'All',
+  showNewOnly = false,
+  pageTitle,
+}) => {
   const { products, loading } = useProducts();
-  const [filter, setFilter] = useState<Category | 'All'>('All');
+  const [filter, setFilter] = useState<Category | 'All'>(initialCategory);
   const [sort, setSort] = useState('popular');
   const [search, setSearch] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -25,15 +33,16 @@ const ShopPage: React.FC<ShopPageProps> = ({ onNavigate }) => {
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
-    
+
+    if (showNewOnly) result = result.filter(p => p.new);
+
     if (filter !== 'All') {
       result = result.filter(p => p.category === filter);
     }
-    
+
     if (search) {
       const searchLower = search.toLowerCase();
-      // Simple fuzzy search: name starts with or contains, or description contains
-      result = result.filter(p => 
+      result = result.filter(p =>
         p.name.toLowerCase().includes(searchLower) ||
         p.description.toLowerCase().includes(searchLower) ||
         p.category.toLowerCase().includes(searchLower)
@@ -43,9 +52,9 @@ const ShopPage: React.FC<ShopPageProps> = ({ onNavigate }) => {
     if (sort === 'price-asc') result.sort((a, b) => a.price - b.price);
     if (sort === 'price-desc') result.sort((a, b) => b.price - a.price);
     if (sort === 'rating') result.sort((a, b) => b.rating - a.rating);
-    
+
     return result;
-  }, [products, filter, sort, search]);
+  }, [products, filter, sort, search, showNewOnly]);
 
   if (loading) {
     return (
@@ -60,9 +69,9 @@ const ShopPage: React.FC<ShopPageProps> = ({ onNavigate }) => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
         <div>
-          <h2 className="text-4xl font-serif font-bold text-rose-950 mb-2">Our Collection</h2>
+          <h2 className="text-4xl font-serif font-bold text-rose-950 mb-2">{pageTitle || 'Our Collection'}</h2>
           <div className="flex items-center gap-2 text-sm text-gray-500">
-            <span>Home</span> <ChevronRight size={14} /> <span className="text-rose-900 font-bold">Shop</span>
+            <span>Home</span> <ChevronRight size={14} /> <span className="text-rose-900 font-bold">{pageTitle || 'Shop'}</span>
           </div>
         </div>
         

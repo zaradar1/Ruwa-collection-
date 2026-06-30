@@ -11,6 +11,11 @@ import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
+import SystemDesignPage from './pages/SystemDesignPage';
+import HelpCenterPage from './pages/HelpCenterPage';
+import ShippingReturnsPage from './pages/ShippingReturnsPage';
+import SizeGuidePage from './pages/SizeGuidePage';
+import ContactUsPage from './pages/ContactUsPage';
 import ErrorBoundary from './components/ErrorBoundary';
 import { useAuth } from './components/AuthContext';
 
@@ -79,6 +84,15 @@ const App: React.FC = () => {
       }
       return <UserDashboard onNavigate={navigate} />;
     }
+    if (currentPage === '/system-design') return <SystemDesignPage onNavigate={navigate} />;
+    if (currentPage === '/new-arrivals') return <ShopPage onNavigate={navigate} showNewOnly pageTitle="New Arrivals" />;
+    if (currentPage === '/sarees') return <ShopPage onNavigate={navigate} initialCategory="Sarees" pageTitle="Sarees" />;
+    if (currentPage === '/lehengas') return <ShopPage onNavigate={navigate} initialCategory="Lehengas" pageTitle="Lehengas" />;
+    if (currentPage === '/kurtis') return <ShopPage onNavigate={navigate} initialCategory="Kurtis" pageTitle="Kurtis" />;
+    if (currentPage === '/help-center') return <HelpCenterPage onNavigate={navigate} />;
+    if (currentPage === '/shipping-returns') return <ShippingReturnsPage onNavigate={navigate} />;
+    if (currentPage === '/size-guide') return <SizeGuidePage onNavigate={navigate} />;
+    if (currentPage === '/contact') return <ContactUsPage onNavigate={navigate} />;
     return <HomePage onNavigate={navigate} />;
   };
 
