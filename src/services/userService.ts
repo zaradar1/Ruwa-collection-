@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, setDoc, onSnapshot, collection, query, orderBy } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from './firebase';
 import { UserProfile } from '../types';
 
@@ -49,4 +49,12 @@ export const updateUserProfile = async (uid: string, profile: Partial<UserProfil
   } catch (error) {
     handleFirestoreError(error, OperationType.UPDATE, `${COLLECTION_NAME}/${uid}`);
   }
+};
+
+export const subscribeToAllUsers = (callback: (users: UserProfile[]) => void) => {
+  const q = query(collection(db, COLLECTION_NAME), orderBy('createdAt', 'desc'));
+  return onSnapshot(q, (snapshot) => {
+    const users = snapshot.docs.map(d => ({ uid: d.id, ...d.data() })) as UserProfile[];
+    callback(users);
+  }, () => callback([]));
 };

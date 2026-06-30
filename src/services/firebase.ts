@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { getFirestore, collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where, orderBy, onSnapshot, getDocFromServer } from 'firebase/firestore';
 
 // This will be populated after set_up_firebase is completed
@@ -31,7 +31,7 @@ export const loginWithGoogle = () => signInWithPopup(auth, googleProvider);
 export const logout = () => signOut(auth);
 export const loginWithEmail = (email: string, pass: string) => signInWithEmailAndPassword(auth, email, pass);
 export const signupWithEmail = (email: string, pass: string) => createUserWithEmailAndPassword(auth, email, pass);
-export { updateProfile };
+export { updateProfile, sendPasswordResetEmail, updatePassword, EmailAuthProvider, reauthenticateWithCredential };
 
 // Firestore Error Handling
 export enum OperationType {
