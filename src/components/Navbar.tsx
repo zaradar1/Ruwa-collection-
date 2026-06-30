@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingBag, Heart, User, Menu, X, Search, Sparkles, LogIn, LogOut, Settings } from 'lucide-react';
+import { ShoppingBag, Heart, Menu, X, Search, LogIn, LogOut, Settings } from 'lucide-react';
 import { useCart } from './CartContext';
 import { useWishlist } from './WishlistContext';
 import { useAuth } from './AuthContext';
@@ -11,6 +11,25 @@ interface NavbarProps {
   onOpenCart: () => void;
   currentPage: string;
 }
+
+const RWMonogram = () => (
+  <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="21" cy="21" r="20" fill="#9f1239" />
+    <circle cx="21" cy="21" r="18.5" stroke="#fecdd3" strokeWidth="0.8" />
+    <circle cx="21" cy="21" r="16" stroke="#fda4af" strokeWidth="0.4" strokeDasharray="2 2" />
+    <text
+      x="21" y="26"
+      textAnchor="middle"
+      fontFamily="Georgia, 'Times New Roman', serif"
+      fontSize="14"
+      fontWeight="700"
+      letterSpacing="1.5"
+      fill="#fff1f2"
+    >
+      RW
+    </text>
+  </svg>
+);
 
 const NAV_ITEMS = [
   { label: 'Home', path: '/' },
@@ -30,9 +49,12 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, onOpenCart, currentPage }) 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <div className="flex-shrink-0 cursor-pointer flex items-center gap-2" onClick={() => onNavigate('/')}>
-            <Sparkles className="text-rose-600" size={24} />
-            <h1 className="text-2xl font-serif font-bold tracking-tight text-rose-950">RuWa Verse</h1>
+          <div className="flex-shrink-0 cursor-pointer flex items-center gap-3" onClick={() => onNavigate('/')}>
+            <RWMonogram />
+            <div className="flex flex-col leading-none">
+              <span className="text-xl font-serif font-bold tracking-wide text-rose-950">RuWa Verse</span>
+              <span className="text-[9px] tracking-[0.25em] uppercase text-rose-400 font-medium">Ethnic Boutique</span>
+            </div>
           </div>
 
           {/* Desktop Nav */}
