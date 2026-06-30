@@ -114,7 +114,7 @@ const App: React.FC = () => {
             },
           }}
         />
-        <Navbar onNavigate={navigate} onOpenCart={() => setIsCartOpen(true)} />
+        <Navbar onNavigate={navigate} onOpenCart={() => setIsCartOpen(true)} currentPage={currentPage} />
         <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} onNavigate={navigate} />
         
         <main className="pt-20">

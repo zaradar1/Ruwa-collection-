@@ -9,8 +9,8 @@ export const subscribeToProducts = (callback: (products: Product[]) => void) => 
   return onSnapshot(q, (snapshot) => {
     const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
     callback(products);
-  }, (error) => {
-    handleFirestoreError(error, OperationType.GET, COLLECTION_NAME);
+  }, () => {
+    callback([]);
   });
 };
 
@@ -68,8 +68,8 @@ export const subscribeToReviews = (productId: string, callback: (reviews: any[])
       };
     });
     callback(reviews);
-  }, (error) => {
-    handleFirestoreError(error, OperationType.GET, `${COLLECTION_NAME}/${productId}/reviews`);
+  }, () => {
+    callback([]);
   });
 };
 

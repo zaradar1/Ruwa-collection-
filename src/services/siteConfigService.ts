@@ -1,5 +1,5 @@
 import { doc, setDoc, onSnapshot } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType } from './firebase';
+import { db } from './firebase';
 
 export interface SiteConfig {
   heroImage: string;
@@ -67,7 +67,7 @@ export const updateSiteConfig = async (config: Partial<SiteConfig>) => {
   try {
     const docRef = doc(db, 'siteConfig', 'main');
     await setDoc(docRef, next, { merge: true });
-  } catch (error) {
-    handleFirestoreError(error, OperationType.UPDATE, 'siteConfig/main');
+  } catch {
+    // silently ignore — config is already saved to localStorage
   }
 };

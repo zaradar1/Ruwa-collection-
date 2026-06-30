@@ -31,15 +31,15 @@ export const subscribeToUserOrders = (userId: string, callback: (orders: Order[]
   return onSnapshot(q, (snapshot) => {
     const orders = snapshot.docs.map(doc => {
       const data = doc.data();
-      return { 
-        id: doc.id, 
+      return {
+        id: doc.id,
         ...data,
-        createdAt: data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : data.createdAt 
+        createdAt: data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : data.createdAt
       } as Order;
     });
     callback(orders);
-  }, (error) => {
-    handleFirestoreError(error, OperationType.GET, COLLECTION_NAME);
+  }, () => {
+    callback([]);
   });
 };
 
@@ -48,15 +48,15 @@ export const subscribeToAllOrders = (callback: (orders: Order[]) => void) => {
   return onSnapshot(q, (snapshot) => {
     const orders = snapshot.docs.map(doc => {
       const data = doc.data();
-      return { 
-        id: doc.id, 
+      return {
+        id: doc.id,
         ...data,
-        createdAt: data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : data.createdAt 
+        createdAt: data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : data.createdAt
       } as Order;
     });
     callback(orders);
-  }, (error) => {
-    handleFirestoreError(error, OperationType.GET, COLLECTION_NAME);
+  }, () => {
+    callback([]);
   });
 };
 

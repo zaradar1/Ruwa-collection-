@@ -25,8 +25,8 @@ export const subscribeToUserProfile = (uid: string, callback: (profile: UserProf
     } else {
       callback(null);
     }
-  }, (error) => {
-    handleFirestoreError(error, OperationType.GET, `${COLLECTION_NAME}/${uid}`);
+  }, () => {
+    callback(null);
   });
 };
 

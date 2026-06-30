@@ -34,11 +34,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onClick }) => {
       onClick={() => onClick(product)}
     >
       <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
-        <img 
-          src={product.image} 
-          alt={product.name} 
+        <img
+          src={product.image}
+          alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
+          onError={(e) => { (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(product.name)}&size=400&background=fdf2f2&color=9f1239&bold=true`; }}
         />
         {product.new && (
           <div className="absolute top-3 left-3">
