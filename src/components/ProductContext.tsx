@@ -18,8 +18,8 @@ const ProductContext = createContext<ProductContextType>({
 export const useProducts = () => useContext(ProductContext);
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = subscribeToProducts((newProducts) => {

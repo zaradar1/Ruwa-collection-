@@ -117,7 +117,7 @@ const App: React.FC = () => {
         <Navbar onNavigate={navigate} onOpenCart={() => setIsCartOpen(true)} currentPage={currentPage} />
         <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} onNavigate={navigate} />
         
-        <main className="pt-20">
+        <main>
           <AnimatePresence mode="wait">
             <motion.div
               key={currentPage}

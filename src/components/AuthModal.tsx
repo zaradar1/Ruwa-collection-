@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Mail, Lock, User, LogIn, UserPlus, Sparkles } from 'lucide-react';
 import { useAuth } from './AuthContext';
@@ -47,10 +48,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -59,10 +60,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             className="absolute inset-0 bg-rose-950/40 backdrop-blur-sm"
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className="relative w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl max-h-[90vh] overflow-x-hidden overflow-y-auto"
           >
             {/* Header */}
             <div className="relative h-32 bg-rose-900 flex items-center justify-center overflow-hidden">
@@ -180,7 +181,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 

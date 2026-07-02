@@ -9,39 +9,64 @@ interface HomePageProps {
   onNavigate: (path: string) => void;
 }
 
-const Hero = ({ onShopNow }: { onShopNow: () => void }) => (
-  <div className="relative h-[85vh] w-full overflow-hidden bg-rose-50">
-    <div className="absolute inset-0 bg-gradient-to-r from-rose-900/80 to-transparent z-10" />
-    <img 
-      src="https://image.qwenlm.ai/public_source/2cea05b4-e842-4876-8e91-c3a877163ecc/122fdc590-6d5f-4dd3-b74d-de66ce389a7e.png" 
-      alt="Hero" 
-      className="absolute inset-0 w-full h-full object-cover object-top"
+const Hero = ({ onShopNow, onNewArrivals }: { onShopNow: () => void; onNewArrivals: () => void }) => (
+  <div className="relative min-h-[88vh] w-full overflow-hidden">
+    {/* Deep rose gradient background */}
+    <div className="absolute inset-0 bg-gradient-to-br from-rose-950 via-[#7c0d2f] to-rose-900" />
+
+    {/* Decorative mandala-style concentric circles — right side */}
+    <div className="absolute right-[-120px] top-1/2 -translate-y-1/2 pointer-events-none">
+      {[700, 560, 420, 300, 180, 80].map((size, i) => (
+        <div
+          key={i}
+          className="absolute rounded-full border border-rose-300/20"
+          style={{ width: size, height: size, top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+        />
+      ))}
+      <div className="absolute w-20 h-20 rounded-full bg-rose-400/10" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+    </div>
+
+    {/* Diagonal silk-weave texture */}
+    <div
+      className="absolute inset-0 opacity-[0.04]"
+      style={{ backgroundImage: 'repeating-linear-gradient(45deg, #fda4af 0, #fda4af 1px, transparent 0, transparent 50%)', backgroundSize: '12px 12px' }}
     />
-    <div className="absolute inset-0 z-20 flex items-center px-4 sm:px-12 lg:px-20">
+
+    {/* Left-to-right gradient vignette so text stays readable */}
+    <div className="absolute inset-0 bg-gradient-to-r from-rose-950/95 via-rose-950/70 to-transparent" />
+
+    {/* Bottom fade to white */}
+    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent" />
+
+    {/* Content */}
+    <div className="absolute inset-0 z-10 flex items-center px-6 sm:px-12 lg:px-24">
       <motion.div
-        initial={{ y: 30, opacity: 0 }}
+        initial={{ y: 40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
         className="max-w-2xl text-white"
       >
-        <span className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest">New Collection 2024</span>
-        <h1 className="text-5xl md:text-7xl font-serif font-bold mt-6 mb-6 leading-tight">
-          ETHNIC <br /> ELEGANCE
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-8 h-px bg-rose-300" />
+          <span className="text-rose-300 text-[11px] font-bold uppercase tracking-[0.3em]">New Collection 2024</span>
+        </div>
+        <h1 className="text-6xl md:text-8xl font-serif font-bold leading-[0.9] tracking-tight mb-6">
+          ETHNIC<br /><span className="text-rose-300">ELEGANCE</span>
         </h1>
-        <p className="text-lg text-rose-100 mb-8 max-w-lg">
-          Discover the finest collection of Sarees, Lehengas, and Kurtis. 
+        <p className="text-base md:text-lg text-rose-100/80 mb-10 max-w-md leading-relaxed">
+          Discover the finest collection of Sarees, Lehengas, and Kurtis.
           Crafted for the modern woman who cherishes tradition.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <button 
+          <button
             onClick={onShopNow}
-            className="px-8 py-4 border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-rose-900 transition-all duration-300"
+            className="px-8 py-4 bg-white text-rose-950 rounded-full font-bold hover:bg-rose-50 transition-all duration-300 shadow-2xl shadow-rose-950/40"
           >
             Shop Collection
           </button>
-          <button 
-            onClick={onShopNow}
-            className="px-8 py-4 bg-rose-900 text-white rounded-full font-bold hover:bg-rose-800 transition-all duration-300 shadow-xl"
+          <button
+            onClick={onNewArrivals}
+            className="px-8 py-4 border-2 border-rose-300/50 text-white rounded-full font-bold hover:border-white hover:bg-white/10 transition-all duration-300"
           >
             View New Arrivals
           </button>
@@ -57,7 +82,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
   return (
     <div className="space-y-0">
-      <Hero onShopNow={() => onNavigate('/shop')} />
+      <Hero onShopNow={() => onNavigate('/shop')} onNewArrivals={() => onNavigate('/new-arrivals')} />
       
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
