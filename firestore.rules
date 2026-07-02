@@ -70,9 +70,8 @@ service cloud.firestore {
 
     function isAdmin() {
       return isAuthenticated() &&
-        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
-          (request.auth.token.email == "Unmej.nurase@gmail.com" && request.auth.token.email_verified == true));
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
     function hasRequiredFields(fields) {
@@ -145,7 +144,7 @@ service cloud.firestore {
       return hasRequiredFields(['email', 'displayName', 'photoURL', 'role', 'createdAt']) &&
              isValidEmail(data.email) &&
              data.displayName is string && data.displayName.size() > 0 && data.displayName.size() <= 100 &&
-             isValidUrl(data.photoURL) &&
+             data.photoURL is string &&
              data.role in ['admin', 'user'] &&
              data.createdAt is timestamp &&
              (!('phoneNumber' in data) || (data.phoneNumber is string && data.phoneNumber.size() <= 20)) &&
@@ -183,6 +182,11 @@ service cloud.firestore {
       allow create: if isAuthenticated() && isOwner(userId) && isValidUser(request.resource.data) && request.resource.data.role == 'user';
       allow update: if (isOwner(userId) && isValidUser(request.resource.data) && request.resource.data.role == resource.data.role) || isAdmin();
       allow delete: if isAdmin();
+    }
+
+    match /siteConfig/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     match /{path=**} {
